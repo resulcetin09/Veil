@@ -10,6 +10,7 @@ import { Button, Modal } from "./Primitives";
 import {
   connectWallet,
   discoverWallets,
+  type ConnectionStage,
   type WalletSession,
 } from "../lib/wallet";
 import { safeError } from "../lib/errors";
@@ -29,6 +30,8 @@ export function WalletModal({
   const [wallets, setWallets] = useState(discoverWallets);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [stage, setStage] = useState<ConnectionStage>("permission");
+  const pending = useRef(false);
   const active = useRef(true);
   useEffect(() => {
     active.current = true;
@@ -39,10 +42,14 @@ export function WalletModal({
     };
   }, []);
   async function connect(index: number) {
+    if (pending.current) return;
+    pending.current = true;
     setBusy(true);
     setError("");
     try {
-      const result = await connectWallet(wallets[index]);
+      const result = await connectWallet(wallets[index], (next) => {
+        if (active.current) setStage(next);
+      });
       if (active.current) {
         onConnected(result);
         onClose();
@@ -50,6 +57,7 @@ export function WalletModal({
     } catch (err) {
       if (active.current) setError(safeError(err));
     } finally {
+      pending.current = false;
       if (active.current) setBusy(false);
     }
   }
@@ -63,7 +71,7 @@ export function WalletModal({
           <div className="connected-wallet">
             <CheckCircle size={36} weight="light" />
             <div>
-              <strong>{session.name}</strong>
+              <strong translate="no">{session.name}</strong>
               <p>{shortId(session.address)}</p>
             </div>
             <span className="status-pill">
@@ -97,7 +105,7 @@ export function WalletModal({
                   <Wallet size={25} weight="light" aria-hidden="true" />
                 </span>
                 <span>
-                  <strong>{wallet.name}</strong>
+                  <strong translate="no">{wallet.name}</strong>
                   <small>
                     {busy
                       ? "Check your wallet…"
@@ -140,6 +148,11 @@ export function WalletModal({
             <ShieldCheck size={18} weight="light" aria-hidden="true" />
             Veil never asks for your recovery phrase.
           </p>
+          <p className="muted">
+            Use the Chrome profile where Lace is installed. Open Lace, unlock
+            your Midnight wallet and select Preview before connecting. A proof
+            server is only needed later for contract operations.
+          </p>
           {error && (
             <p className="error" role="alert">
               {error}
@@ -147,8 +160,13 @@ export function WalletModal({
           )}
           {busy && (
             <p className="muted" role="status">
-              Approve the connection in your wallet. You can close this window
-              to cancel this connection attempt.
+              {stage === "permission"
+                ? "Open Lace to review the connection request. No transaction is being signed."
+                : stage === "network"
+                  ? "Checking that your wallet is connected to Midnight Preview…"
+                  : "Reading your wallet address…"}{" "}
+              Closing this window stops Veil from using the result. Any pending
+              request in Lace must be closed there.
             </p>
           )}
         </>

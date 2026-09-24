@@ -27,6 +27,17 @@ Tarayıcı: `http://127.0.0.1:5173/`
 8. **Seal allowlist** ile listeyi kapat. Bu işlem geri alınamaz; sonrasında yeni davet eklenmez.
 9. Misafir akışında daveti yükle, açıklamayı onayla ve **Prove & request access** ile işlemi tamamla.
 
+## Cüzdan bağlantısı hata verirse
+
+Bağlantı aşaması yalnızca cüzdan iznini, Preview ağını ve adresi kontrol eder; bu aşamada proof server çağrılmaz ve işlem imzalanmaz. Lace, uygulamayı açtığın Chrome profilinde kurulu ve açık olmalı. Tarayıcı çevirisinin cüzdan adını değiştirmemesi için uygulamada marka adları korunur.
+
+- Ağ hatasında Lace içinden Midnight Preview ağını seçip tekrar dene; Veil kendiliğinden başka ağa geçmez.
+- İzin reddinde Lace içindeki site izinlerini kontrol et.
+- Zaman aşımında eski bağlantı isteğini Lace içinde kapatıp cüzdanı aç; sonra yeniden dene.
+- Bağlantı hatası ile kontrat işlemi hatası farklıdır. Proof server kurulumu, cüzdan bağlantısı doğrulandıktan sonraki kontrat adımları içindir.
+
+Hata sınıflandırması [resmi DApp Connector hata yapısındaki](https://github.com/midnightntwrk/midnight-dapp-connector-api) `code` ve `reason` alanlarını da dikkate alır; ham hata içeriği kullanıcıya veya kayıtlara yazılmaz.
+
 ## GitHub ve canlı arayüz
 
 Depo: [resulcetin09/Veil](https://github.com/resulcetin09/Veil)
@@ -42,4 +53,4 @@ GitHub Pages yalnızca arayüzü ve ispat anahtarlarını barındırır. Midnigh
 - Test çıktısı görselini, başarılı GitHub Actions bağlantısını ve canlı demo bağlantısını ekle.
 - `docs/demo-script.md` akışına göre bir dakikalık gerçek ağ demosu kaydet. Özel davet sırrını veya cüzdan kurtarma kelimelerini kayda alma.
 
-İlk ortam kontrolünde Docker komutu ve Docker Desktop bulunamadı. Compact derleyicisi bu proje için `.tools` içine kuruldu. Lace’in kullanıcı Chrome profilinde kurulu olup olmadığı ayrıca kontrol edilmelidir.
+İlk ortam kontrolünde Docker komutu ve Docker Desktop bulunamadı. Compact derleyicisi bu proje için `.tools` içine kuruldu. Lace, kullanıcının Chrome profilinde uygulama tarafından algılandı; gerçek bağlantı henüz doğrulanmadı.

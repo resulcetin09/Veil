@@ -7,9 +7,9 @@ This file tracks observed evidence, not aspirations. Update each external item o
 | Chosen idea                  | Private Allowlist Access — [proposal](product-proposal.md)                                                                                |
 | External idea approval       | Not yet submitted/verified                                                                                                                |
 | Compact contract             | `contracts/veil.compact`, compiler 0.31.1; all 3 circuits compile and proving keys generated locally                                      |
-| 3+ passing tests             | 27 local contract/application tests, 18 production browser checks and 6 development-server checks passed                                  |
+| 3+ passing tests             | 35 local contract/application tests, 22 production browser checks and 10 development-server checks passed                                 |
 | Public repository            | Public repository exists at `https://github.com/resulcetin09/Veil`; push rejected because the current GitHub token lacks `workflow` scope |
-| 10+ meaningful commits       | 14 meaningful local commits; verify with `git log --oneline`                                                                              |
+| 10+ meaningful commits       | 15 meaningful local commits; verify with `git log --oneline`                                                                              |
 | CI/CD                        | `.github/workflows/ci.yml` implemented; hosted run blocked until the workflow can be pushed                                               |
 | Live frontend                | GitHub Pages target `https://resulcetin09.github.io/Veil/`; publication verification pending                                              |
 | Network contract and receipt | Not yet deployed/verified with a real funded Preview wallet                                                                               |
@@ -19,6 +19,8 @@ This file tracks observed evidence, not aspirations. Update each external item o
 
 The local demo is a real execution of the generated contract runtime, not a cryptographic proof or a network transaction. It must not be used as substitute evidence for the live network requirement.
 
-Latest local validation: production build and 27 unit/contract tests passed. All 18 production browser checks and 6 development-server checks passed with one worker; two optional production evidence-capture entries were intentionally skipped. Earlier concurrent Chrome launches intermittently timed out before test context creation.
+Latest local validation: production build and 35 unit/contract tests passed. All 22 production browser checks and 10 development-server checks passed with one worker; two optional production evidence-capture entries were intentionally skipped. Earlier concurrent Chrome launches intermittently timed out before test context creation.
 
 The reported local-demo failure was reproduced on port 5173: Vite could not resolve the nested on-chain runtime after dependency optimization. A direct pinned runtime dependency fixes resolution; a browser process shim also fixes SDK initialization in development. The demo was manually completed at the user-facing address after these fixes. CI now checks development-server behavior as well as production. This does not imply a hosted CI run or network deployment.
+
+Wallet connection errors now distinguish permission, network, lock and extension failures, including structured connector errors. Mocked Preview connection succeeds without a proof server. Real Lace connection remains unverified: automated approval review blocked initiating the wallet permission flow without specific user consent. The public GitHub repository was verified to exist but remain empty, with Pages disabled. Publication still requires a GitHub credential that can write workflows.

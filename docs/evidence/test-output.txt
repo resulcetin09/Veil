@@ -6,7 +6,7 @@
  RUN  v4.1.11 /Users/resulcetin/Desktop/risein/new-moon-stage3
 
  ✓ tests/invitation.test.ts > Private invitation boundary > validates and retains only supported fields 1ms
- ✓ tests/invitation.test.ts > Private invitation boundary > rejects organizer secrets in the guest flow 1ms
+ ✓ tests/invitation.test.ts > Private invitation boundary > rejects organizer secrets in the guest flow 0ms
  ✓ tests/invitation.test.ts > Private invitation boundary > rejects malformed or mismatched inputs {"network":"mainnet"} 0ms
  ✓ tests/invitation.test.ts > Private invitation boundary > rejects malformed or mismatched inputs {"secret":"bad"} 0ms
  ✓ tests/invitation.test.ts > Private invitation boundary > rejects malformed or mismatched inputs {"eventId":""} 0ms
@@ -14,29 +14,37 @@
  ✓ tests/invitation.test.ts > Private invitation boundary > rejects malformed or mismatched inputs {"name":""} 0ms
  ✓ tests/invitation.test.ts > Private invitation boundary > rejects invalid and oversized documents 0ms
  ✓ tests/invitation.test.ts > Private invitation boundary > binds invitations to the event read from the ledger 0ms
- ✓ tests/invitation.test.ts > Private invitation boundary > generates independent 256-bit invitation secrets 5ms
+ ✓ tests/invitation.test.ts > Private invitation boundary > generates independent 256-bit invitation secrets 2ms
  ✓ tests/invitation.test.ts > Private invitation boundary > round-trips bytes and rejects partial hexadecimal input 0ms
  ✓ tests/invitation.test.ts > Private invitation boundary > does not reflect witness secrets from raw SDK errors 0ms
  ✓ tests/wallet.test.ts > Wallet and private session > ignores incompatible and malformed injected wallets 1ms
  ✓ tests/wallet.test.ts > Wallet and private session > rejects a wrong network even if the wallet accepted the connection hint 1ms
  ✓ tests/wallet.test.ts > Wallet and private session > does not consider a revoked connection valid 0ms
  ✓ tests/wallet.test.ts > Wallet and private session > propagates user rejection without fabricating a connected session 0ms
+ ✓ tests/wallet.test.ts > Wallet and private session > connects to Preview without asking a proof service or requesting a transaction 1ms
+ ✓ tests/wallet.test.ts > Wallet and private session > explains connector failures without treating them as transaction failures 0ms
+ ✓ tests/wallet.test.ts > Wallet and private session > explains connector failures without treating them as transaction failures 0ms
+ ✓ tests/wallet.test.ts > Wallet and private session > explains connector failures without treating them as transaction failures 0ms
+ ✓ tests/wallet.test.ts > Wallet and private session > explains connector failures without treating them as transaction failures 0ms
+ ✓ tests/wallet.test.ts > Wallet and private session > explains connector failures without treating them as transaction failures 0ms
+ ✓ tests/wallet.test.ts > Wallet and private session > redacts unknown errors while identifying the failing connection step 0ms
+ ✓ tests/wallet.test.ts > Wallet and private session > does not query a wallet that responds after the connection timeout 2ms
  ✓ tests/wallet.test.ts > Wallet and private session > scopes private state by contract and clears all session material 0ms
- ✓ tests/contract.test.ts > Veil — compiled Compact contract > admits a registered invitation and publishes its event-scoped nullifier 59ms
- ✓ tests/contract.test.ts > Veil — compiled Compact contract > rejects a second redemption without incrementing the count 42ms
- ✓ tests/contract.test.ts > Veil — compiled Compact contract > rejects an unregistered invitation 21ms
- ✓ tests/contract.test.ts > Veil — compiled Compact contract > rejects a malicious witness that supplies another guest’s valid path 21ms
- ✓ tests/contract.test.ts > Veil — compiled Compact contract > rejects a forged sibling even when the leaf matches 24ms
- ✓ tests/contract.test.ts > Veil — compiled Compact contract > rejects unauthorized registration and closing 10ms
- ✓ tests/contract.test.ts > Veil — compiled Compact contract > rejects duplicate commitments 19ms
- ✓ tests/contract.test.ts > Veil — compiled Compact contract > freezes the allowlist before allowing redemption 21ms
+ ✓ tests/contract.test.ts > Veil — compiled Compact contract > admits a registered invitation and publishes its event-scoped nullifier 50ms
+ ✓ tests/contract.test.ts > Veil — compiled Compact contract > rejects a second redemption without incrementing the count 38ms
+ ✓ tests/contract.test.ts > Veil — compiled Compact contract > rejects an unregistered invitation 19ms
+ ✓ tests/contract.test.ts > Veil — compiled Compact contract > rejects a malicious witness that supplies another guest’s valid path 18ms
+ ✓ tests/contract.test.ts > Veil — compiled Compact contract > rejects a forged sibling even when the leaf matches 21ms
+ ✓ tests/contract.test.ts > Veil — compiled Compact contract > rejects unauthorized registration and closing 9ms
+ ✓ tests/contract.test.ts > Veil — compiled Compact contract > rejects duplicate commitments 17ms
+ ✓ tests/contract.test.ts > Veil — compiled Compact contract > freezes the allowlist before allowing redemption 19ms
  ✓ tests/contract.test.ts > Veil — compiled Compact contract > domain-separates commitments, nullifiers and events 0ms
- ✓ tests/contract.test.ts > Veil — compiled Compact contract > does not expose the private invitation secret or membership leaf in the redemption public transcript 34ms
+ ✓ tests/contract.test.ts > Veil — compiled Compact contract > does not expose the private invitation secret or membership leaf in the redemption public transcript 32ms
 
  Test Files  3 passed (3)
-      Tests  27 passed (27)
-   Start at  13:00:24
-   Duration  439ms (transform 144ms, setup 0ms, import 218ms, tests 268ms, environment 0ms)
+      Tests  35 passed (35)
+   Start at  20:44:43
+   Duration  380ms (transform 127ms, setup 0ms, import 170ms, tests 237ms, environment 0ms)
 
 
 Sourcemap for "/Users/resulcetin/Desktop/risein/new-moon-stage3/contracts/managed/veil/contract/index.js" points to missing source files

@@ -5,7 +5,7 @@ import config from "./playwright.config";
 // Exercise the same lazy imports against a real development server as well.
 export default defineConfig({
   ...config,
-  grep: /compiled contract demo|real SDK|local demo cannot load/,
+  grep: /compiled contract demo|real SDK|local demo cannot load|structured wallet network rejection|connects a Preview wallet/,
   workers: process.env.CI ? 2 : 1,
   outputDir: "test-results/dev",
   reporter: [

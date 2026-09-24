@@ -117,6 +117,74 @@ test("handles wallet rejection without implying a successful connection", async 
   await expect(page.getByText("Not connected", { exact: true })).toBeVisible();
 });
 
+test("explains a structured wallet network rejection before connection", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    window.midnight = {
+      test: {
+        name: "Test wallet",
+        rdns: "test.wallet",
+        icon: "",
+        apiVersion: "4.0.1",
+        connect: async () => {
+          throw {
+            type: "DAppConnectorAPIError",
+            code: "InvalidRequest",
+            reason: "Network mismatch: requested preview but active mainnet",
+          };
+        },
+      },
+    };
+  });
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Connect wallet", exact: true })
+    .first()
+    .click();
+  await page.getByRole("button", { name: /Test wallet/ }).click();
+  await expect(page.getByRole("alert")).toContainText(
+    "select the Preview network",
+  );
+  await expect(page.getByRole("alert")).not.toContainText("proof service");
+  await expect(page.getByRole("dialog")).toBeVisible();
+});
+
+test("connects a Preview wallet without a proof server", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.midnight = {
+      test: {
+        name: "Test wallet",
+        rdns: "test.wallet",
+        icon: "",
+        apiVersion: "4.0.1",
+        connect: async (network) => {
+          if (network !== "preview") throw new Error("Wrong requested network");
+          return {
+            getConnectionStatus: async () => ({ status: "connected" }),
+            getConfiguration: async () => ({ networkId: "preview" }),
+            getShieldedAddresses: async () => ({
+              shieldedAddress: "test-address",
+            }),
+          } as never;
+        },
+      },
+    };
+  });
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Connect wallet", exact: true })
+    .first()
+    .click();
+  await page.getByRole("button", { name: /Test wallet/ }).click();
+  await expect(page.getByRole("dialog")).not.toBeVisible();
+  await page.getByRole("button", { name: "test-address", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "Your wallet" }),
+  ).toBeVisible();
+  await expect(page.getByRole("alert")).not.toBeVisible();
+});
+
 test("rejects wrong-network wallet responses", async ({ page }) => {
   await page.addInitScript(() => {
     window.midnight = {

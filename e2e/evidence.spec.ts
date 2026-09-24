@@ -11,7 +11,13 @@ test("captures the actual unit test output for the submission", async ({
   await expect(
     page.getByRole("heading", { name: "Contract & application tests" }),
   ).toBeVisible();
-  await expect(page.getByText("27 passed", { exact: false })).toBeVisible();
+  const output = await page.locator("pre").innerText();
+  const passed = output.match(/Tests\s+(\d+) passed/);
+  expect(
+    passed,
+    "The captured output must contain a passing Vitest summary",
+  ).not.toBeNull();
+  expect(Number(passed![1])).toBeGreaterThanOrEqual(3);
   await page.screenshot({
     path: "docs/evidence/test-output.png",
     fullPage: true,
