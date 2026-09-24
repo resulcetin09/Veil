@@ -30,6 +30,10 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - name: Install checksum-verified Compact 0.31.1
+        run: npm run setup:compact
+      - name: Compile contract and generate proving keys
+        run: npm run compile
       - name: Build application for GitHub Pages
         run: npm run build
         env:
