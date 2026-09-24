@@ -73,7 +73,7 @@ export function Access({
     window.addEventListener("beforeunload", handler);
     return () => window.removeEventListener("beforeunload", handler);
   }, [invitation, demo]);
-  async function run(action: () => Promise<void>) {
+  async function run(action: () => Promise<void>, failureMessage?: string) {
     if (actionLock.current) return;
     if (!globalBusy(true)) {
       setError(
@@ -87,7 +87,7 @@ export function Access({
     try {
       await action();
     } catch (err) {
-      setError(safeError(err));
+      setError(failureMessage ?? safeError(err));
     } finally {
       actionLock.current = false;
       setBusy(false);
@@ -103,7 +103,7 @@ export function Access({
       setEvent(next.inspect());
       setReceipt(null);
       setDisclosure(false);
-    });
+    }, "The local demo could not start. Reload this page and try again. No wallet or proof server is needed.");
   }
   async function importFile(file: File) {
     try {

@@ -9,6 +9,7 @@ export default defineConfig({
   resolve: {
     alias: {
       assert: "assert/",
+      process: "process/browser",
       "isomorphic-ws": fileURLToPath(
         new URL("./src/lib/browser-websocket.ts", import.meta.url),
       ),
@@ -16,6 +17,8 @@ export default defineConfig({
   },
   build: { target: "es2022" },
   optimizeDeps: {
+    // Keep the excluded runtime as a direct dependency: optimized imports
+    // resolve from node_modules/.vite, not a dependency's nested node_modules.
     exclude: [
       "@midnight-ntwrk/ledger-v8",
       "@midnight-ntwrk/onchain-runtime-v3",

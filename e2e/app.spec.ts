@@ -55,6 +55,26 @@ test("runs the compiled contract demo and rejects replay", async ({ page }) => {
   expect(await page.evaluate(() => localStorage.length)).toBe(0);
 });
 
+test("explains when the local demo cannot load without requesting wallet setup", async ({
+  page,
+}) => {
+  await page.route(
+    /\/(?:src\/lib\/demo\.ts|assets\/demo-[^/]+\.js)(?:\?.*)?$/,
+    (route) => route.abort(),
+  );
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Just exploring? Try the local demo" })
+    .click();
+  await expect(page.getByRole("alert")).toContainText(
+    "The local demo could not start",
+  );
+  await expect(page.getByRole("alert")).toContainText(
+    "No wallet or proof server is needed",
+  );
+  await expect(page.getByText("Local session ready")).not.toBeVisible();
+});
+
 test("explains missing wallets and restores focus after dialog closes", async ({
   page,
 }) => {

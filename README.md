@@ -98,7 +98,10 @@ npm run typecheck
 npm test               # generated-contract, invitation and wallet tests
 npm run build
 npm run test:e2e        # desktop + mobile, including axe WCAG AA checks
+npm run test:e2e:dev    # demo + lazy SDK imports against the development server
 ```
+
+The development checks cover successful demo admission, replay protection, a failed demo module download, and real SDK loading with a mocked wallet. The on-chain runtime is a direct pinned dependency so Vite can resolve it after dependency optimization; browser globals load before the application.
 
 Local browser tests use installed Google Chrome. CI installs Chromium. To use downloaded Chromium locally, set `PLAYWRIGHT_CHANNEL=chromium` as documented in the configuration. Browser wallet mocks test UI behavior; they do not prove live wallet or network integration.
 
@@ -113,7 +116,7 @@ Test coverage includes valid admission, replay rejection, unregistered secrets, 
 1. Install locked dependencies and checksum-verified Compact.
 2. Compile all three circuits and generate real proving/verifier keys.
 3. Type-check, run contract/application tests, and build.
-4. Run desktop/mobile browser and accessibility tests.
+4. Run desktop/mobile browser and accessibility tests against the production build, plus demo and SDK regression checks against the development server.
 5. Upload test reports and failure traces.
 6. On `main`, build with `/Veil/` as the base path and deploy to GitHub Pages only after successful verification.
 

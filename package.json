@@ -16,7 +16,8 @@
     "setup:compact": "node scripts/setup-compact.mjs",
     "compile": "node scripts/compile.mjs",
     "compile:check": "node scripts/compile.mjs --skip-zk",
-    "check": "npm run compile:check && npm run typecheck && npm test && npm run build"
+    "check": "npm run compile:check && npm run typecheck && npm test && npm run build",
+    "test:e2e:dev": "playwright test --config playwright.dev.config.ts"
   },
   "dependencies": {
     "@fontsource-variable/geist": "5.2.8",
@@ -30,10 +31,12 @@
     "@midnight-ntwrk/midnight-js-indexer-public-data-provider": "4.1.1",
     "@midnight-ntwrk/midnight-js-network-id": "4.1.1",
     "@midnight-ntwrk/midnight-js-types": "4.1.1",
+    "@midnight-ntwrk/onchain-runtime-v3": "3.0.0",
     "@midnight-ntwrk/wallet-sdk-address-format": "3.1.2",
     "@phosphor-icons/react": "2.1.10",
     "assert": "2.1.0",
     "buffer": "6.0.3",
+    "process": "0.11.10",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
