@@ -16,7 +16,10 @@ export default defineConfig({
       name: "desktop",
       use: {
         ...devices["Desktop Chrome"],
-        channel: process.env.CI ? undefined : "chrome",
+        channel:
+          process.env.CI || process.env.PLAYWRIGHT_CHANNEL === "chromium"
+            ? undefined
+            : "chrome",
         viewport: { width: 1440, height: 1100 },
       },
     },
@@ -25,7 +28,10 @@ export default defineConfig({
       use: {
         ...devices["iPhone 13"],
         defaultBrowserType: "chromium",
-        channel: process.env.CI ? undefined : "chrome",
+        channel:
+          process.env.CI || process.env.PLAYWRIGHT_CHANNEL === "chromium"
+            ? undefined
+            : "chrome",
       },
     },
   ],

@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 
 test("renders the access experience without overflow or browser errors", async ({
   page,
-}) => {
+}, testInfo) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
@@ -19,6 +19,13 @@ test("renders the access experience without overflow or browser errors", async (
     ),
   ).toBe(true);
   expect(errors).toEqual([]);
+  if (process.env.CAPTURE_EVIDENCE) {
+    await page.screenshot({
+      path: `docs/evidence/veil-${testInfo.project.name}.png`,
+      fullPage: true,
+      animations: "disabled",
+    });
+  }
 });
 
 test("runs the compiled contract demo and rejects replay", async ({ page }) => {

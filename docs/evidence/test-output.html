@@ -1,0 +1,43 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Veil — test evidence</title><style>body{margin:0;padding:50px;background:#111214;color:#eeeae3;font:16px system-ui}h1{font-weight:500;font-size:34px}p{color:#c7baf5}pre{background:#1b1c21;padding:28px;border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.8 ui-monospace,monospace}small{color:#aaa}</style><h1>Contract &amp; application tests</h1><p>Veil · Actual local Vitest output</p><small>Captured 2026-09-24T09:52:41.350Z. Runtime tests, not network proof verification.</small><pre>
+&gt; veil-private-access@0.1.0 test
+&gt; vitest run --reporter=verbose --no-color
+
+
+ RUN  v4.1.11 /Users/resulcetin/Desktop/risein/new-moon-stage3
+
+ ✓ tests/invitation.test.ts &gt; Private invitation boundary &gt; validates and retains only supported fields 4ms
+ ✓ tests/invitation.test.ts &gt; Private invitation boundary &gt; rejects organizer secrets in the guest flow 1ms
+ ✓ tests/invitation.test.ts &gt; Private invitation boundary &gt; rejects malformed or mismatched inputs {"network":"mainnet"} 0ms
+ ✓ tests/invitation.test.ts &gt; Private invitation boundary &gt; rejects malformed or mismatched inputs {"secret":"bad"} 0ms
+ ✓ tests/invitation.test.ts &gt; Private invitation boundary &gt; rejects malformed or mismatched inputs {"eventId":""} 0ms
+ ✓ tests/invitation.test.ts &gt; Private invitation boundary &gt; rejects malformed or mismatched inputs {"version":2} 0ms
+ ✓ tests/invitation.test.ts &gt; Private invitation boundary &gt; rejects malformed or mismatched inputs {"name":""} 0ms
+ ✓ tests/invitation.test.ts &gt; Private invitation boundary &gt; rejects invalid and oversized documents 0ms
+ ✓ tests/invitation.test.ts &gt; Private invitation boundary &gt; binds invitations to the event read from the ledger 1ms
+ ✓ tests/invitation.test.ts &gt; Private invitation boundary &gt; generates independent 256-bit invitation secrets 4ms
+ ✓ tests/invitation.test.ts &gt; Private invitation boundary &gt; round-trips bytes and rejects partial hexadecimal input 0ms
+ ✓ tests/invitation.test.ts &gt; Private invitation boundary &gt; does not reflect witness secrets from raw SDK errors 0ms
+ ✓ tests/wallet.test.ts &gt; Wallet and private session &gt; ignores incompatible and malformed injected wallets 1ms
+ ✓ tests/wallet.test.ts &gt; Wallet and private session &gt; rejects a wrong network even if the wallet accepted the connection hint 1ms
+ ✓ tests/wallet.test.ts &gt; Wallet and private session &gt; does not consider a revoked connection valid 0ms
+ ✓ tests/wallet.test.ts &gt; Wallet and private session &gt; propagates user rejection without fabricating a connected session 0ms
+ ✓ tests/wallet.test.ts &gt; Wallet and private session &gt; scopes private state by contract and clears all session material 1ms
+ ✓ tests/contract.test.ts &gt; Veil — compiled Compact contract &gt; admits a registered invitation and publishes its event-scoped nullifier 66ms
+ ✓ tests/contract.test.ts &gt; Veil — compiled Compact contract &gt; rejects a second redemption without incrementing the count 48ms
+ ✓ tests/contract.test.ts &gt; Veil — compiled Compact contract &gt; rejects an unregistered invitation 22ms
+ ✓ tests/contract.test.ts &gt; Veil — compiled Compact contract &gt; rejects a malicious witness that supplies another guest’s valid path 25ms
+ ✓ tests/contract.test.ts &gt; Veil — compiled Compact contract &gt; rejects a forged sibling even when the leaf matches 26ms
+ ✓ tests/contract.test.ts &gt; Veil — compiled Compact contract &gt; rejects unauthorized registration and closing 12ms
+ ✓ tests/contract.test.ts &gt; Veil — compiled Compact contract &gt; rejects duplicate commitments 20ms
+ ✓ tests/contract.test.ts &gt; Veil — compiled Compact contract &gt; freezes the allowlist before allowing redemption 28ms
+ ✓ tests/contract.test.ts &gt; Veil — compiled Compact contract &gt; domain-separates commitments, nullifiers and events 0ms
+ ✓ tests/contract.test.ts &gt; Veil — compiled Compact contract &gt; does not expose the private invitation secret or membership leaf in the redemption public transcript 42ms
+
+ Test Files  3 passed (3)
+      Tests  27 passed (27)
+   Start at  12:52:40
+   Duration  592ms (transform 258ms, setup 0ms, import 323ms, tests 310ms, environment 0ms)
+
+
+Sourcemap for "/Users/resulcetin/Desktop/risein/new-moon-stage3/contracts/managed/veil/contract/index.js" points to missing source files
+</pre></html>

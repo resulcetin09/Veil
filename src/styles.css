@@ -1483,6 +1483,9 @@
   }
 }
 @layer responsive {
+  .mobile-menu {
+    display: none;
+  }
   @media (min-width: 1450px) {
     .app-shell {
       padding-inline: 64px;
@@ -1652,7 +1655,7 @@
       min-height: 37px;
     }
     .mobile-menu {
-      display: inline-grid !important;
+      display: inline-grid;
     }
     .main-nav {
       display: none;
