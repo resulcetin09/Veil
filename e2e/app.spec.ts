@@ -124,6 +124,50 @@ test("rejects wrong-network wallet responses", async ({ page }) => {
   );
 });
 
+test("loads the real SDK and refuses to send witness data to a remote prover", async ({
+  page,
+}) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.addInitScript(() => {
+    window.midnight = {
+      test: {
+        name: "Test wallet",
+        rdns: "test.wallet",
+        icon: "",
+        apiVersion: "4.0.1",
+        connect: async () =>
+          ({
+            getConnectionStatus: async () => ({ status: "connected" }),
+            getConfiguration: async () => ({
+              networkId: "preview",
+              proverServerUri: "https://untrusted.invalid",
+            }),
+            getShieldedAddresses: async () => ({
+              shieldedAddress: "test-address",
+            }),
+          }) as never,
+      },
+    };
+  });
+  await page.goto("/#organizer");
+  await page
+    .getByRole("button", { name: "Connect wallet", exact: true })
+    .first()
+    .click();
+  await page.getByRole("button", { name: /Test wallet/ }).click();
+  await expect(page.getByRole("dialog")).not.toBeVisible();
+  await page
+    .getByRole("textbox", { name: "Event name" })
+    .fill("Provider boundary test");
+  await page.getByRole("button", { name: "Create event on Midnight" }).click();
+  await expect(page.getByRole("alert")).toContainText(
+    "Veil requires a local proof server",
+    { timeout: 15000 },
+  );
+  expect(errors).toEqual([]);
+});
+
 test("supports deep-linked privacy and organizer views", async ({ page }) => {
   await page.goto("/#privacy");
   await expect(
