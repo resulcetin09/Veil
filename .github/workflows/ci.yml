@@ -48,28 +48,3 @@ jobs:
             test-results
             playwright-report
           retention-days: 14
-      - name: Build for GitHub Pages
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        run: npm run build
-        env:
-          VITE_BASE_PATH: /Veil/
-      - name: Upload Pages site
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    needs: verify
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy verified application
-        id: deployment
-        uses: actions/deploy-pages@v4
