@@ -1,0 +1,68 @@
+pragma language_version 0.23;
+
+import CompactStandardLibrary;
+
+// Each deployment is one event. Only commitments, roots and nullifiers are public.
+export ledger eventId: Bytes<32>;
+export ledger organizer: Bytes<32>;
+export ledger registrationOpen: Boolean;
+export ledger invitations: MerkleTree<10, Bytes<32>>;
+export ledger registered: Set<Bytes<32>>;
+export ledger spent: Set<Bytes<32>>;
+export ledger admitted: Counter;
+
+witness organizerSecret(): Bytes<32>;
+witness invitationSecret(): Bytes<32>;
+witness membershipPath(leaf: Bytes<32>): MerkleTreePath<10, Bytes<32>>;
+
+constructor(id: Bytes<32>, authority: Bytes<32>) {
+  eventId = disclose(id);
+  organizer = disclose(authority);
+  registrationOpen = true;
+}
+
+export pure circuit organizerCommitment(secret: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "veil:organizer:v1"), secret]);
+}
+
+export pure circuit invitationCommitment(id: Bytes<32>, secret: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<3, Bytes<32>>>([pad(32, "veil:invitation:v1"), id, secret]);
+}
+
+export pure circuit invitationNullifier(id: Bytes<32>, secret: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<3, Bytes<32>>>([pad(32, "veil:nullifier:v1"), id, secret]);
+}
+
+circuit requireOrganizer(): [] {
+  assert(organizerCommitment(organizerSecret()) == organizer, "Organizer authorization required");
+}
+
+export circuit register(commitment: Bytes<32>): [] {
+  requireOrganizer();
+  assert(registrationOpen, "Registration is closed");
+  assert(!registered.member(disclose(commitment)), "Invitation already registered");
+  invitations.insert(disclose(commitment));
+  registered.insert(disclose(commitment));
+}
+
+export circuit closeRegistration(): [] {
+  requireOrganizer();
+  assert(registrationOpen, "Registration is already closed");
+  registrationOpen = false;
+}
+
+export circuit redeem(): Bytes<32> {
+  // Freeze the anonymity set before redemption; no per-guest roots or stale-root races.
+  assert(!registrationOpen, "Registration must close before admission");
+  const secret = invitationSecret();
+  const leaf = invitationCommitment(eventId, secret);
+  const path = membershipPath(leaf);
+  // Witness implementations are untrusted. Bind the path to the actual secret.
+  assert(path.leaf == leaf, "Membership path does not match invitation");
+  assert(invitations.checkRoot(disclose(merkleTreePathRoot<10, Bytes<32>>(path))), "Invitation is not on the allowlist");
+  const nullifier = invitationNullifier(eventId, secret);
+  assert(!spent.member(disclose(nullifier)), "Invitation already redeemed");
+  spent.insert(disclose(nullifier));
+  admitted.increment(1);
+  return disclose(nullifier);
+}
