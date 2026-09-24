@@ -1,0 +1,9 @@
+node_modules
+dist
+.tools
+contracts/managed
+public/contract
+playwright-report
+test-results
+package-lock.json
+docs/evidence
