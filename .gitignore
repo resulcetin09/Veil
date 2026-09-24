@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.tools/
+contracts/managed/
+public/contract/
+.env
+.env.local
+test-results/
+playwright-report/
+*.tsbuildinfo
+.DS_Store
+*.invitation.json
+*.organizer.json
