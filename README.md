@@ -14,7 +14,7 @@ The Compact contract, proof keys, application and local test suite are implement
 
 Public-network deployment and a real wallet-signed end-to-end transaction are separate acceptance checks. Until evidence is recorded in [submission.md](docs/submission.md), do not treat this project as a completed network deployment or an audited production service. Event proposal approval must come from the programme organizer.
 
-Live demo: [https://veil-virid.vercel.app](https://veil-virid.vercel.app). The badge above reflects GitHub’s actual verification workflow status.
+Live demo: [https://veil-virid.vercel.app](https://veil-virid.vercel.app). Demo video: [Google Drive recording](https://drive.google.com/file/d/1jNed-qsQ07_LfavvXqrJNn5NfCJ8htPK/view?usp=sharing). The badge above reflects GitHub’s actual verification workflow status.
 
 ## Run locally
 

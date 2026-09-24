@@ -14,7 +14,7 @@ This file tracks observed evidence, not aspirations. Update each external item o
 | Live frontend                | Live demo verified with HTTP 200 at `https://veil-virid.vercel.app`                                                                       |
 | Network contract and receipt | Not yet deployed/verified with a real funded Preview wallet                                                                               |
 | Test screenshot              | [Actual passing test output](evidence/test-output.png), [raw output](evidence/test-output.txt)                                            |
-| One-minute video             | Recorded locally as `Ekran Kaydı 2026-09-24 21.28.14.mov`; public/upload link pending                                                    |
+| One-minute video             | [Google Drive recording](https://drive.google.com/file/d/1jNed-qsQ07_LfavvXqrJNn5NfCJ8htPK/view?usp=sharing), verified with HTTP 200      |
 | Privacy model                | README and in-app Privacy view, including organizer/prover/metadata boundaries                                                            |
 
 The local demo is a real execution of the generated contract runtime, not a cryptographic proof or a network transaction. It must not be used as substitute evidence for the live network requirement.
